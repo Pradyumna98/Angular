@@ -34,22 +34,62 @@
 </div>
 
 
-<div fxFlex="40" *ngIf="dish">
-  <mat-list>
-      <h3> Comments </h3>
-  <mat-list-item *ngFor="let comments of dish.comments">
-      <h4 matLine>{{comments.comment}}</h4>
-      <p matLine>{{comments.rating}} Stars</p>
+<div fxFlex="40" *ngIf="dish" fxLayout="column">
+  <div fxFlex>
+    <mat-list >
+    <h3 matLine>Comments</h3>
+    <mat-list-item *ngFor="let comment of dish.comments">
       <p matLine>
-        <span>-- {{comments.author}} {{comments.date | date}}</span>
+        <span>{{comment.comment}}</span>
+      </p>
+      <p matLine>
+        <span>{{comment.rating}} Stars</span>
+      </p>
+      <p matLine>
+        <span>--{{comment.author}} </span><span>{{comment.date |date}}</span>
       </p>
     </mat-list-item>
-    
-
   </mat-list>
+   </div>
+   <div fxFlex>
+    <mat-list *ngIf="commentForm.valid">
+      <mat-list-item>
+        <p matLine>
+          <span>{{commentForm.value.comment}}</span>
+        </p>
+        <p matLine>
+          <span>{{commentForm.value.rating}} Stars</span>
+        </p>
+        <p matLine>
+          <span>--{{commentForm.value.author}} </span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+     <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()" #cform="ngForm" >
+      <p>
+        <mat-form-field class="full-width">
+            <input matInput formControlName="author" type="text" placeholder="Name">
+        </mat-form-field>
+        <mat-error *ngIf="formErrors.author"> {{formErrors.author }} </mat-error>
+      </p>
+      <p >
+        <mat-slider formControlName="rating" thumbLabel min="1" max="5" value="5" tickInterval="1"></mat-slider>
+      </p>
+      <p>
+        <mat-form-field class="full-width">
+          <textarea matInput formControlName="comment" placeholder="Your Comment" rows="12"></textarea>
+        </mat-form-field>
+        <mat-error *ngIf="formErrors.comment"> {{formErrors.comment}} </mat-error>
+      </p>
+      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+     </form>
+     
+   </div>
+</div>
+<div [hidden]="dish">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>
 
-
-
+</div>
 
 
