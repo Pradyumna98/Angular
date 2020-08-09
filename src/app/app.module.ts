@@ -18,6 +18,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { baseURL } from './shared/baseurl';
+
+
 
 
 
@@ -70,12 +75,16 @@ import { DishService } from './services/dish.service';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatSliderModule,
+    HttpModule,
+    HttpClientModule,
 
 
   ],
   providers: [
     DishService,
     LeaderService,
+    {provide: 'BaseURL', useValue: baseURL}
+
   ],
 
   entryComponents: [
